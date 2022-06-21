@@ -9,6 +9,10 @@ public class Member
 
     public static bool IsValid(Member member, bool requireId = true)
     {
+        if (!member.FirstName.Any())
+        {
+            return false;
+        }
         if (!new[] { member.FirstName, member.LastName, member.MiddleName }
                 .All(x => x.Length < 30))
         {
