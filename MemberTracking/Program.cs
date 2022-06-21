@@ -1,4 +1,5 @@
 using MemberTracking.Data.DbContext;
+using MemberTracking.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<MemberDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetValue<string>("ConnectionStrings:MemberDB"));
 });
+
+builder.Services.AddScoped<IMemberRepository, MembersRepository>();
 
 var app = builder.Build();
 
