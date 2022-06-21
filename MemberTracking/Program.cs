@@ -2,6 +2,8 @@ using MemberTracking.Data.DbContext;
 using MemberTracking.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
+var allowLocalhostRequests = "_allowLocalhostRequests";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +17,17 @@ builder.Services.AddDbContext<MemberDbContext>(options =>
 
 builder.Services.AddScoped<IMemberRepository, MembersRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: allowLocalhostRequests,
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:44389", 
+                "https://localhost:44489")
+                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +38,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(allowLocalhostRequests);
+
 app.UseAuthorization();
 app.MapControllers();
 
