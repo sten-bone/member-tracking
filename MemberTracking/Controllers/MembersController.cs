@@ -6,11 +6,11 @@ namespace MemberTracking.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MemberController : ControllerBase
+public class MembersController : ControllerBase
 {
     private readonly IMemberRepository _membersRepository;
 
-    public MemberController(IMemberRepository membersRepository)
+    public MembersController(IMemberRepository membersRepository)
     {
         _membersRepository = membersRepository;
     }
