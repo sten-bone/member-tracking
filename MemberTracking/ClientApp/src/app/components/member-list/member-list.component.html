@@ -30,7 +30,7 @@
       ></button>
     </div>
   </div>
-  <app-member-form [member]="currentMember"></app-member-form>
+  <app-member-form [member]="currentMember" (resetForm)="resetCurrentMember()"></app-member-form>
   <div>
     <table class="table table-striped members">
       <tr>
@@ -46,6 +46,7 @@
         <td>
           <svg
             class="edit-icon me-2"
+            [ngClass]="currentMember.id != 0 ? 'disabled' : ''"
             width="1.5em"
             height="1.5em"
             fill="currentColor"
@@ -62,6 +63,7 @@
           </svg>
           <svg
             class="delete-icon"
+            [ngClass]="currentMember.id == member.id ? 'disabled' : ''"
             width="1.5em"
             height="1.5em"
             fill="currentColor"

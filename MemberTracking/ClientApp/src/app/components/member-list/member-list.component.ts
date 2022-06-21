@@ -10,7 +10,7 @@ import { MemberService } from 'src/app/services/member.service';
 })
 export class MemberListComponent implements OnInit {
   members$!: Observable<Member[]>;
-  currentMember: Member = new Member;
+  currentMember: Member = new Member();
 
   alert: '' | 'success' | 'failure' = '';
   alertMessage: string = '';
@@ -31,10 +31,20 @@ export class MemberListComponent implements OnInit {
   }
 
   setCurrentMember(member: Member): void {
-    this.currentMember = member;
+    if (this.currentMember.id == 0) {
+      this.copyMember(member, this.currentMember);
+    }
+  }
+
+  resetCurrentMember(): void {
+    this.currentMember = new Member();
   }
 
   deleteMember(id: number) {
+    if (this.currentMember.id == id) {
+      return;
+    }
+
     this.memberService.deleteMember(id).subscribe((success) => {
       if (!success) {
         this.alert = 'failure';
@@ -45,5 +55,12 @@ export class MemberListComponent implements OnInit {
       }
       this.refreshList();
     });
+  }
+
+  private copyMember(from: Member, to: Member) {
+    to.id = from.id;
+    to.firstName = from.firstName;
+    to.middleName = from.middleName;
+    to.lastName = from.lastName;
   }
 }
