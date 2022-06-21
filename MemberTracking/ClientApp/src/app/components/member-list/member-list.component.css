@@ -1,0 +1,21 @@
+.members, .alert {
+  max-width: 750px;
+}
+
+.member-entry {
+  font-size: 1.5rem;
+}
+
+.member-entry:hover:not(.delete-icon) {
+  background: var(--bs-gray-400);
+  cursor: pointer;
+}
+
+.delete-icon {
+  fill: #e48e96;
+}
+
+.delete-icon:hover {
+  cursor: pointer;
+  fill: var(--bs-danger);
+}
