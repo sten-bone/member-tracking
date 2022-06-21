@@ -31,7 +31,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Data\DbContext\EntityTypeConfigurations\" />
     <Folder Include="Data\Models\" />
-    <Folder Include="Data\Repositories\" />
   </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
