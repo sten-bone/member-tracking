@@ -1,6 +1,6 @@
-export interface Member {
-  id: number;
-  firstName: string;
-  middleName: string;
-  lastName: string;
+export class Member {
+  id: number = 0;
+  firstName: string = '';
+  middleName: string = '';
+  lastName: string = '';
 }

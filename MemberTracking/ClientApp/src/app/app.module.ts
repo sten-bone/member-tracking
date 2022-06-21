@@ -6,13 +6,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
+import { MemberFormComponent } from './components/member-form/member-form.component';
 
 const routes: Routes = [
   { path: '', component: MemberListComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
-  declarations: [AppComponent, MemberListComponent],
+  declarations: [AppComponent, MemberListComponent, MemberFormComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,

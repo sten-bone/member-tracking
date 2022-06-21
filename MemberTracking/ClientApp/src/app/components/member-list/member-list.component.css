@@ -8,7 +8,15 @@
 
 .member-entry:hover:not(.delete-icon) {
   background: var(--bs-gray-400);
+}
+
+.edit-icon {
+  fill: #91bdff;
+}
+
+.edit-icon:hover {
   cursor: pointer;
+  fill: var(--bs-blue);
 }
 
 .delete-icon {

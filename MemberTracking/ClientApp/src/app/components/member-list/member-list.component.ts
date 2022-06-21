@@ -10,6 +10,8 @@ import { MemberService } from 'src/app/services/member.service';
 })
 export class MemberListComponent implements OnInit {
   members$!: Observable<Member[]>;
+  currentMember: Member = new Member;
+
   alert: '' | 'success' | 'failure' = '';
   alertMessage: string = '';
 
@@ -26,6 +28,10 @@ export class MemberListComponent implements OnInit {
   resetAlert(): void {
     this.alert = '';
     this.alertMessage = '';
+  }
+
+  setCurrentMember(member: Member): void {
+    this.currentMember = member;
   }
 
   deleteMember(id: number) {
