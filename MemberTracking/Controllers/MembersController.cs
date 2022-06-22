@@ -16,34 +16,34 @@ public class MembersController : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<ActionResult<List<Member>>> GetAllMembers()
+    public async Task<ActionResult<List<Member>>> GetAllMembersAsync()
     {
         var members = await _membersRepository.GetAllMembers();
         return Ok(members);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Member>> GetMemberById(int id)
+    public async Task<ActionResult<Member>> GetMemberByIdAsync(int id)
     {
         var member = await _membersRepository.GetMemberById(id);
         return Ok(member);
     }
 
     [HttpPost("")]
-    public async Task<ActionResult> CreateMember([FromBody] Member member)
+    public async Task<ActionResult<bool>> CreateMemberAsync([FromBody] Member member)
     {
         if (!Member.IsValid(member, requireId: false))
         {
             return BadRequest("Invalid member.");
         }
 
-        await _membersRepository.CreateMember(member);
+        var result = await _membersRepository.CreateMember(member);
         await _membersRepository.SaveChanges();
-        return Ok();
+        return Ok(result);
     }
 
     [HttpPost("{id:int}")]
-    public async Task<ActionResult<bool>> UpdateMember(int id, [FromBody] Member member)
+    public async Task<ActionResult<bool>> UpdateMemberAsync(int id, [FromBody] Member member)
     {
         if (!Member.IsValid(member))
         {
@@ -52,19 +52,14 @@ public class MembersController : ControllerBase
 
         var result = await _membersRepository.UpdateMember(id, member);
         await _membersRepository.SaveChanges();
-        return result;
+        return Ok(result);
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<ActionResult<bool>> DeleteMember(int id)
+    public async Task<ActionResult<bool>> DeleteMemberAsync(int id)
     {
-        if (id <= 0)
-        {
-            return BadRequest("Invalid Member ID provided.");
-        }
-
         var result = await _membersRepository.DeleteMember(id);
         await _membersRepository.SaveChanges();
-        return result;
+        return Ok(result);
     }
 }

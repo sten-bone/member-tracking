@@ -8,7 +8,7 @@ public interface IMemberRepository
 {
     Task<List<Member>> GetAllMembers();
     Task<Member?> GetMemberById(int id);
-    Task CreateMember(Member member);
+    Task<bool> CreateMember(Member member);
     Task<bool> UpdateMember(int id, Member member);
     Task<bool> DeleteMember(int id);
     Task SaveChanges();
@@ -23,20 +23,21 @@ public class MembersRepository : IMemberRepository
         _context = context;
     }
 
-    public Task<List<Member>> GetAllMembers()
+    public async Task<List<Member>> GetAllMembers()
     {
-        return _context.Members.AsNoTracking().ToListAsync();
+        return await _context.Members.AsNoTracking().ToListAsync();
     }
 
-    public Task<Member?> GetMemberById(int id)
+    public async Task<Member?> GetMemberById(int id)
     {
-        return _context.Members.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Members.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task CreateMember(Member member)
+    public async Task<bool> CreateMember(Member member)
     {
         // validation handled at controller level
-        await _context.Members.AddAsync(member);
+        var result = await _context.Members.AddAsync(member);
+        return result.Entity.Id > 0;
     }
 
     public async Task<bool> UpdateMember(int id, Member member)

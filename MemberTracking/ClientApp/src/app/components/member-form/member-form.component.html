@@ -36,7 +36,11 @@
     </div>
   </section>
   <section>
-    <button [hidden]="!memberForm.valid" type="submit" class="btn btn-primary me-2">
+    <button
+      [disabled]="!memberForm.valid"
+      type="submit"
+      class="btn btn-primary me-2"
+    >
       {{ member.id == 0 ? "Add" : "Update" }}
     </button>
     <button

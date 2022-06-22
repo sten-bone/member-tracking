@@ -13,7 +13,7 @@ export class MemberListComponent implements OnInit {
   members$!: Observable<Member[]>;
   currentMember: Member = new Member();
 
-  alert: Alert = new Alert('', '');
+  alert: Alert = new Alert();
 
   constructor(private memberService: MemberService) {}
 
@@ -25,17 +25,13 @@ export class MemberListComponent implements OnInit {
     this.members$ = this.memberService.getAllMembers();
   }
 
-  setAlert(alert: Alert): void {
-    this.alert = alert;
-  }
-
   resetAlert(): void {
-    this.alert = Alert.createDefault();
+    this.alert = new Alert();
   }
 
   setCurrentMember(member: Member): void {
     if (this.currentMember.id == 0) {
-      this.copyMember(member, this.currentMember);
+      Object.assign(this.currentMember, member);
     }
   }
 
@@ -90,12 +86,5 @@ export class MemberListComponent implements OnInit {
       }
       this.refreshList();
     });
-  }
-
-  private copyMember(from: Member, to: Member) {
-    to.id = from.id;
-    to.firstName = from.firstName;
-    to.middleName = from.middleName;
-    to.lastName = from.lastName;
   }
 }

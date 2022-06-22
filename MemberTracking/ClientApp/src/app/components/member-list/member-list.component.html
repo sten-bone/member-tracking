@@ -2,25 +2,12 @@
   <h1>Member Tracking</h1>
   <section class="alerts">
     <div
-      *ngIf="alert.type == 'success'"
-      class="alert alert-success alert-dismissible fade show"
+      *ngIf="alert.type != ''"
+      class="alert alert-dismissible fade show"
+      [ngClass]="alert.type=='success' ? 'alert-success' : 'alert-danger'"
       role="alert"
     >
-      Success! {{ alert.message }}
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-        (click)="resetAlert()"
-      ></button>
-    </div>
-    <div
-      *ngIf="alert.type == 'failure'"
-      class="alert alert-danger alert-dismissible fade show"
-      role="alert"
-    >
-      Failure. {{ alert.message }}
+      {{alert.type == 'success' ? 'Success!' : 'Failure' }} {{ alert.message }}
       <button
         type="button"
         class="btn-close"

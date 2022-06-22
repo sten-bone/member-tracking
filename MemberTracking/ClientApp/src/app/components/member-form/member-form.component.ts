@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Member } from 'src/app/models/member';
 
 @Component({
   selector: 'app-member-form',
   templateUrl: './member-form.component.html',
   styleUrls: ['./member-form.component.css'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MemberFormComponent implements OnInit {
   @Input() member!: Member;
