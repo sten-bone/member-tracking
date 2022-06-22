@@ -1,6 +1,6 @@
 <div class="m-3">
   <h1>Member Tracking</h1>
-  <div class="alerts">
+  <section class="alerts">
     <div
       *ngIf="alert == 'success'"
       class="alert alert-success alert-dismissible fade show"
@@ -29,23 +29,24 @@
         (click)="resetAlert()"
       ></button>
     </div>
-  </div>
+  </section>
   <app-member-form [member]="currentMember" (resetForm)="resetCurrentMember()"></app-member-form>
-  <div>
+  <section class="mt-2">
+    <div class="h2">Members</div>
     <table class="table table-striped members">
       <tr>
-        <th>First Name</th>
-        <th>Middle Name</th>
-        <th>Last Name</th>
+        <th>First</th>
+        <th>Middle</th>
+        <th>Last</th>
         <th></th>
       </tr>
       <tr *ngFor="let member of members$ | async" class="member-entry">
         <td>{{ member.firstName }}</td>
         <td>{{ member.middleName }}</td>
         <td>{{ member.lastName }}</td>
-        <td>
+        <td class="text-center">
           <svg
-            class="edit-icon me-2"
+            class="edit-icon"
             [ngClass]="currentMember.id != 0 ? 'disabled' : ''"
             width="1.5em"
             height="1.5em"
@@ -77,5 +78,5 @@
         </td>
       </tr>
     </table>
-  </div>
+  </section>
 </div>

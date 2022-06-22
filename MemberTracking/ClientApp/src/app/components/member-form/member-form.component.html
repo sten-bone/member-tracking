@@ -1,33 +1,51 @@
 <form (ngSubmit)="addMember()" #memberForm="ngForm">
-  <input
-    type="text"
-    class="form-control"
-    name="firstName"
-    [(ngModel)]="member.firstName"
-    placeholder="First Name"
-    autocomplete="off"
-    required
-  />
-  <input
-    type="text"
-    class="form-control"
-    name="middleName"
-    [(ngModel)]="member.middleName"
-    placeholder="Middle Name"
-    autocomplete="off"
-  />
-  <input
-    type="text"
-    class="form-control"
-    name="lastName"
-    [(ngModel)]="member.lastName"
-    placeholder="Last Name"
-    autocomplete="off"
-  />
-  <button [hidden]="!memberForm.valid" type="submit" class="btn btn-primary">
-    {{ member.id == 0 ? "Add" : "Update" }}
-  </button>
-  <button *ngIf="member.id != 0" type="button" class="btn btn-secondary" (click)="setToDefault()">
-    Cancel
-  </button>
+  <section class="member-input d-md-flex justify-content-md-between mb-2">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        name="firstName"
+        [(ngModel)]="member.firstName"
+        placeholder="First Name"
+        autocomplete="off"
+        required
+      />
+      <label for="firstName">First Name</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        name="middleName"
+        [(ngModel)]="member.middleName"
+        placeholder="Middle Name"
+        autocomplete="off"
+      />
+      <label for="middleName">Middle Name</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        name="lastName"
+        [(ngModel)]="member.lastName"
+        placeholder="Last Name"
+        autocomplete="off"
+      />
+      <label for="lastName">Last Name</label>
+    </div>
+  </section>
+  <section>
+    <button [hidden]="!memberForm.valid" type="submit" class="btn btn-primary me-2">
+      {{ member.id == 0 ? "Add" : "Update" }}
+    </button>
+    <button
+      *ngIf="member.id != 0"
+      type="button"
+      class="btn btn-secondary"
+      (click)="setToDefault()"
+    >
+      Cancel
+    </button>
+  </section>
 </form>
