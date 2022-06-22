@@ -1,0 +1,4 @@
+.state-toggle:hover {
+  cursor: pointer;
+  fill: var(--bs-gray-600);
+}

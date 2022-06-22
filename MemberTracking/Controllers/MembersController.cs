@@ -16,11 +16,37 @@ public class MembersController : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<ActionResult<List<Member>>> GetAllMembersAsync()
+    public async Task<ActionResult<List<Member>>> GetAllMembersAsync([FromQuery] string sortBy, [FromQuery] string orderBy)
     {
         var members = await _membersRepository.GetAllMembers();
-        return Ok(members);
+        // no sorting requested
+        if (orderBy == "default")
+        {
+            return Ok(members);
+        }
+
+        // sort depending on if query is ascending or descending
+        return (orderBy == "asc" ?
+            members.OrderBy(x =>
+            {
+                return sortBy switch
+                {
+                    "first" => x.FirstName,
+                    "middle" => x.MiddleName,
+                    _ => x.LastName
+                };
+            }) :
+            members.OrderByDescending(x =>
+            {
+                return sortBy switch
+                {
+                    "first" => x.FirstName,
+                    "middle" => x.MiddleName,
+                    _ => x.LastName
+                };
+            })).ToList();
     }
+
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Member>> GetMemberByIdAsync(int id)

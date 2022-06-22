@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Alert } from 'src/app/models/alert';
 import { Member } from 'src/app/models/member';
 import { MemberService } from 'src/app/services/member.service';
@@ -13,7 +13,15 @@ export class MemberListComponent implements OnInit {
   members$!: Observable<Member[]>;
   currentMember: Member = new Member();
 
+  private sortStreamSource = new Subject<string>();
+  sortStream$ = this.sortStreamSource.asObservable();
+
   alert: Alert = new Alert();
+
+  sortOptions = {
+    sortBy: 'first',
+    orderBy: 'default'
+  };
 
   constructor(private memberService: MemberService) {}
 
@@ -22,7 +30,14 @@ export class MemberListComponent implements OnInit {
   }
 
   refreshList(): void {
-    this.members$ = this.memberService.getAllMembers();
+    this.members$ = this.memberService.getAllMembers(this.sortOptions);
+  }
+
+  changeSortOption(option: string, value: string) {
+    this.sortStreamSource.next(option);
+    this.sortOptions.sortBy = option;
+    this.sortOptions.orderBy = value;
+    this.refreshList();
   }
 
   resetAlert(): void {

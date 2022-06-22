@@ -4,10 +4,10 @@
     <div
       *ngIf="alert.type != ''"
       class="alert alert-dismissible fade show"
-      [ngClass]="alert.type=='success' ? 'alert-success' : 'alert-danger'"
+      [ngClass]="alert.type == 'success' ? 'alert-success' : 'alert-danger'"
       role="alert"
     >
-      {{alert.type == 'success' ? 'Success!' : 'Failure' }} {{ alert.message }}
+      {{ alert.type == "success" ? "Success!" : "Failure" }} {{ alert.message }}
       <button
         type="button"
         class="btn-close"
@@ -26,9 +26,33 @@
     <div class="h2">Members</div>
     <table class="table table-striped members">
       <tr>
-        <th>First</th>
-        <th>Middle</th>
-        <th>Last</th>
+        <th>
+          First
+          <app-sorting
+            [name]="'first'"
+            [sortStream]="sortStream$"
+            (sortingChange)="changeSortOption('first', $event)"
+            class="mb-2"
+          ></app-sorting>
+        </th>
+        <th>
+          Middle
+          <app-sorting
+            [name]="'middle'"
+            [sortStream]="sortStream$"
+            (sortingChange)="changeSortOption('middle', $event)"
+            class="mb-2"
+          ></app-sorting>
+        </th>
+        <th>
+          Last
+          <app-sorting
+            [name]="'last'"
+            [sortStream]="sortStream$"
+            (sortingChange)="changeSortOption('last', $event)"
+            class="mb-2"
+          ></app-sorting>
+        </th>
         <th></th>
       </tr>
       <tr *ngFor="let member of members$ | async">

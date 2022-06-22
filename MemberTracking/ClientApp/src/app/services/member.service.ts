@@ -11,8 +11,13 @@ export class MemberService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public getAllMembers(): Observable<Member[]> {
-    return this.httpClient.get<Member[]>(this.apiString);
+  public getAllMembers(sortOptions: {
+    sortBy: string;
+    orderBy: string;
+  }): Observable<Member[]> {
+    return this.httpClient.get<Member[]>(this.apiString, {
+      params: sortOptions,
+    });
   }
 
   public addMember(member: Member): Observable<any> {
