@@ -3,12 +3,12 @@
   max-width: 750px;
 }
 
-.member-entry {
+.members {
   font-size: 1rem;
 }
 
 @media (min-width: 768px) {
-  .member-entry {
+  .members {
     font-size: 1.5rem;
   }
 }

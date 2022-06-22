@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Member } from 'src/app/models/member';
-import { MemberService } from 'src/app/services/member.service';
 
 @Component({
   selector: 'app-member-form',
@@ -10,8 +9,7 @@ import { MemberService } from 'src/app/services/member.service';
 export class MemberFormComponent implements OnInit {
   @Input() member!: Member;
   @Output() resetForm = new EventEmitter();
-
-  constructor(private memberService: MemberService) {}
+  @Output() addOrUpdateMember = new EventEmitter<Member>();
 
   ngOnInit(): void {}
 
@@ -20,8 +18,8 @@ export class MemberFormComponent implements OnInit {
     this.resetForm.emit();
   }
 
-  addMember(): void {
-    console.log(this.member.id, this.member.firstName);
+  memberSubmit() {
+    this.addOrUpdateMember.emit(this.member);
     this.setToDefault();
   }
 }

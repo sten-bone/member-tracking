@@ -1,6 +1,7 @@
 using MemberTracking.Data.DbContext;
 using MemberTracking.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 var allowLocalhostRequests = "_allowLocalhostRequests";
 
@@ -24,7 +25,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins("https://localhost:44389", 
                 "https://localhost:44489")
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .WithHeaders(HeaderNames.ContentType);
         });
 });
 

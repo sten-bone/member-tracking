@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Alert } from 'src/app/models/alert';
 import { Member } from 'src/app/models/member';
 import { MemberService } from 'src/app/services/member.service';
 
@@ -12,8 +13,7 @@ export class MemberListComponent implements OnInit {
   members$!: Observable<Member[]>;
   currentMember: Member = new Member();
 
-  alert: '' | 'success' | 'failure' = '';
-  alertMessage: string = '';
+  alert: Alert = new Alert('', '');
 
   constructor(private memberService: MemberService) {}
 
@@ -25,9 +25,12 @@ export class MemberListComponent implements OnInit {
     this.members$ = this.memberService.getAllMembers();
   }
 
+  setAlert(alert: Alert): void {
+    this.alert = alert;
+  }
+
   resetAlert(): void {
-    this.alert = '';
-    this.alertMessage = '';
+    this.alert = Alert.createDefault();
   }
 
   setCurrentMember(member: Member): void {
@@ -40,6 +43,37 @@ export class MemberListComponent implements OnInit {
     this.currentMember = new Member();
   }
 
+  addOrUpdateMember(member: Member): void {
+    if (member.id == 0) {
+      this.addMember(member);
+    } else {
+      this.updateMember(member);
+    }
+  }
+
+  addMember(member: Member) {
+    this.memberService.addMember(member).subscribe((_) => {
+      this.alert = new Alert('success', 'New Member added.');
+      this.refreshList();
+    });
+  }
+
+  updateMember(member: Member) {
+    this.memberService
+      .updateMember(this.currentMember.id, member)
+      .subscribe((result) => {
+        if (!result) {
+          this.alert = new Alert(
+            'failure',
+            `Could not update Member with ID ${member.id}`
+          );
+        } else {
+          this.alert = new Alert('success', 'Updated Member information.');
+          this.refreshList();
+        }
+      });
+  }
+
   deleteMember(id: number) {
     if (this.currentMember.id == id) {
       return;
@@ -47,11 +81,12 @@ export class MemberListComponent implements OnInit {
 
     this.memberService.deleteMember(id).subscribe((success) => {
       if (!success) {
-        this.alert = 'failure';
-        this.alertMessage = `Could not delete Member with ID ${id}`;
+        this.alert = new Alert(
+          'failure',
+          `Could not delete Member with ID ${id}`
+        );
       } else {
-        this.alert = 'success';
-        this.alertMessage = 'Member deleted.';
+        this.alert = new Alert('success', 'Member deleted.');
       }
       this.refreshList();
     });

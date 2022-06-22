@@ -2,11 +2,11 @@
   <h1>Member Tracking</h1>
   <section class="alerts">
     <div
-      *ngIf="alert == 'success'"
+      *ngIf="alert.type == 'success'"
       class="alert alert-success alert-dismissible fade show"
       role="alert"
     >
-      Success! {{ alertMessage }}
+      Success! {{ alert.message }}
       <button
         type="button"
         class="btn-close"
@@ -16,11 +16,11 @@
       ></button>
     </div>
     <div
-      *ngIf="alert == 'failure'"
+      *ngIf="alert.type == 'failure'"
       class="alert alert-danger alert-dismissible fade show"
       role="alert"
     >
-      Failure. {{ alertMessage }}
+      Failure. {{ alert.message }}
       <button
         type="button"
         class="btn-close"
@@ -30,7 +30,11 @@
       ></button>
     </div>
   </section>
-  <app-member-form [member]="currentMember" (resetForm)="resetCurrentMember()"></app-member-form>
+  <app-member-form
+    [member]="currentMember"
+    (resetForm)="resetCurrentMember()"
+    (addOrUpdateMember)="addOrUpdateMember($event)"
+  ></app-member-form>
   <section class="mt-2">
     <div class="h2">Members</div>
     <table class="table table-striped members">
@@ -40,7 +44,7 @@
         <th>Last</th>
         <th></th>
       </tr>
-      <tr *ngFor="let member of members$ | async" class="member-entry">
+      <tr *ngFor="let member of members$ | async">
         <td>{{ member.firstName }}</td>
         <td>{{ member.middleName }}</td>
         <td>{{ member.lastName }}</td>
